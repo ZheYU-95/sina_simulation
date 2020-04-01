@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="sina_gripper" params="parent *origin">
+    <xacro:include filename="$(find sina_description)/xacros/gripper/sina_xacro.xacro" />
+    <xacro:include filename="$(find sina_description)/xacros/gripper/sina_tns.xacro" />
+
+    <joint name="$gripper_base_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="gripper_base_link" />
+      <origin xyz="0.0395 0.0 0.1235"/>
+    </joint>
+
+    <link name="gripper_base_link">
+      <visual>
+        <origin rpy="0.0 0.0 1.57079" xyz="0 0 0" />
+        <geometry>
+          <mesh scale="0.001 0.001 0.001" filename="package://sina_description/meshes/gripper/base_ursprung.stl"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin rpy="0.0 0.0 1.57079" xyz="-0.06 0 -0.035" />
+        <geometry>
+          <mesh scale="0.001 0.001 0.001" filename="package://sina_description/meshes/gripper/base_ursprung.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <xacro:thumb position="proximal" roll="0.0" pitch="0.0" yaw="-1.57079" x="-0.075" y="0.0" z="0.015" parent="gripper_base_link" low="-0.60" up="0.60" scale="0.001" mesh="proximal_ursprung.stl" />
+
+    <xacro:thumb position="distal" roll="3.14" pitch="3.14" yaw="1.57079" x="0.0" y="0.0" z="0.09" parent="proximal_thumb" low="0.0" up="0.80" scale="0.001" mesh="distal_ursprung.stl"/>
+
+    <link name="fingers">
+      <visual>
+        <origin rpy="0.0 0.0 1.57079" xyz="0 0 0"/>
+        <geometry>
+          <mesh scale="0.001 0.001 0.001" filename="package://sina_description/meshes/gripper/handflaeche_ursprung.stl"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin rpy="0.0 0.0 1.57079" xyz="0 0 0.075"/>
+        <geometry>
+          <mesh scale="0.001 0.001 0.001" filename="package://sina_description/meshes/gripper/handflaeche_ursprung.stl"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      </inertial>
+    </link>
+    <joint name="gripper_base_link_fingers" type="fixed">
+      <parent link="gripper_base_link"/>
+      <child link="fingers"/>
+      <origin xyz="0.0 0.0 0.0"/>
+    </joint>
+
+    <xacro:property name="part1" value="fingers"/>
+    <xacro:property name="part2" value="proximal_thumb"/>
+    <xacro:property name="part3" value="distal_thumb"/>
+    <xacro:property name="oberflaeche1" value="-0.015"/>
+    <xacro:property name="oberflaeche2" value="0.019"/>
+    <xacro:property name="oberflaeche3" value="0.002"/>
+    <xacro:property name="oberflaeche4" value="0.005"/>
+    <xacro:property name="proximal_innen" value="0.028"/>
+    <xacro:property name="proximal_aussen" value="-0.021"/>
+    <xacro:property name="distal_innen" value="0.0245"/>
+    <xacro:property name="distal_aussen" value="-0.023"/>
+    <xacro:property name="proximal_obeninnen" value="0.014"/>
+    <xacro:property name="proximal_obenaussen" value="-0.0125"/>
+    <xacro:property name="tns_height" value="0.003"/>
+
+
+    <xacro:tns name="1p0" parent="${part1}" x="${oberflaeche1}" y="-0.015" z="0.05" roll="1.57079" pitch="0" yaw="-1.57079" isvisible="true" tns_w="0.025" tns_l="0.025" />
+    <xacro:tns name="1p1" parent="${part1}" x="${oberflaeche1}"  y="0.015" z="0.05" roll="1.57079" pitch="0" yaw="-1.57079" isvisible="true" tns_w="0.025" tns_l="0.025" />
+    <xacro:tns name="1p2" parent="${part1}" x="${oberflaeche1}" y="-0.015" z="0.08" roll="1.57079" pitch="0" yaw="-1.57079" isvisible="true" tns_w="0.025" tns_l="0.025" />
+    <xacro:tns name="1p3" parent="${part1}" x="${oberflaeche1}"  y="0.015" z="0.08" roll="1.57079" pitch="0" yaw="-1.57079" isvisible="true" tns_w="0.025" tns_l="0.025" />
+    <xacro:tns name="1p4" parent="${part1}" x="${oberflaeche1}" y="-0.015" z="0.11" roll="1.57079" pitch="0" yaw="-1.57079" isvisible="true" tns_w="0.025" tns_l="0.025" />
+    <xacro:tns name="1p5" parent="${part1}" x="${oberflaeche1}"  y="0.015" z="0.11" roll="1.57079" pitch="0" yaw="-1.57079" isvisible="true" tns_w="0.025" tns_l="0.025" />
+    <xacro:tns name="1p6" parent="${part1}" x="${oberflaeche1}" y="-0.015" z="0.14" roll="1.57079" pitch="0" yaw="-1.57079" isvisible="true" tns_w="0.025" tns_l="0.025" />
+    <xacro:tns name="1p7" parent="${part1}" x="${oberflaeche1}"  y="0.015" z="0.14" roll="1.57079" pitch="0" yaw="-1.57079" isvisible="true" tns_w="0.025" tns_l="0.025" />
+
+    <xacro:tns name="2p0" parent="${part1}" x="${oberflaeche3}" y="-0.04"  z="0.03" roll="1.57079" pitch="0" yaw="0.349"   isvisible="true" tns_w="0.025" tns_l="0.045" />
+    <xacro:tns name="2p1" parent="${part1}" x="${oberflaeche2}"  y="0.00"  z="0.03" roll="1.57079" pitch="0" yaw="1.57079" isvisible="true" tns_w="0.045" tns_l="0.045" />
+    <xacro:tns name="2p2" parent="${part1}" x="${oberflaeche3}"  y="0.04"  z="0.03" roll="1.57079" pitch="0" yaw="2.793"   isvisible="true" tns_w="0.025" tns_l="0.045" />
+    <xacro:tns name="2p3" parent="${part1}" x="${oberflaeche3}" y="-0.039" z="0.09" roll="1.57079" pitch="0" yaw="0.349"   isvisible="true" tns_w="0.025" tns_l="0.045" />
+    <xacro:tns name="2p4" parent="${part1}" x="${oberflaeche2}"  y="0.00"  z="0.09" roll="1.57079" pitch="0" yaw="1.57079" isvisible="true" tns_w="0.045" tns_l="0.045" />
+    <xacro:tns name="2p5" parent="${part1}" x="${oberflaeche3}"  y="0.039" z="0.09" roll="1.57079" pitch="0" yaw="2.793"   isvisible="true" tns_w="0.025" tns_l="0.045" />
+    <xacro:tns name="2p6" parent="${part1}" x="${oberflaeche4}" y="-0.0225"  z="0.135" roll="1.396"  pitch="0" yaw="1.047" isvisible="true" tns_w="0.035" tns_l="0.025" />
+    <xacro:tns name="2p7" parent="${part1}" x="${oberflaeche4}"  y="0.0225"  z="0.135" roll="1.396"  pitch="0" yaw="2.094" isvisible="true" tns_w="0.035" tns_l="0.025" />
+
+    <xacro:tns name="3p0" parent="${part2}" x="${proximal_innen}"      y="0.00" z="0.034" roll="1.57079" pitch="0" yaw="1.57079" isvisible="true" tns_w="0.045" tns_l="0.02" />
+    <xacro:tns name="3p1" parent="${part2}" x="${proximal_innen}"      y="0.00" z="0.058" roll="1.57079" pitch="0" yaw="1.57079" isvisible="true" tns_w="0.045" tns_l="0.02" />
+    <xacro:tns name="3p2" parent="${part3}" x="${distal_innen}"      y="-0.013" z="0.03"  roll="1.57079" pitch="0" yaw="1.57079" isvisible="true" tns_w="0.022" tns_l="0.022" />
+    <xacro:tns name="3p3" parent="${part3}" x="${distal_innen}"       y="0.013" z="0.03"  roll="1.57079" pitch="0" yaw="1.57079" isvisible="true" tns_w="0.022" tns_l="0.022" />
+    <xacro:tns name="3p4" parent="${part3}" x="${distal_innen}"     y="-0.013"  z="0.056" roll="1.57079" pitch="0" yaw="1.57079" isvisible="true" tns_w="0.022" tns_l="0.022" />
+    <xacro:tns name="3p5" parent="${part3}" x="${distal_innen}"       y="0.013" z="0.056" roll="1.57079" pitch="0" yaw="1.57079" isvisible="true" tns_w="0.022" tns_l="0.022" />
+    <xacro:tns name="3p6" parent="${part3}" x="${proximal_obeninnen}" y="-0.012" z="0.085" roll="0.8377"  pitch="0" yaw="1.57079" isvisible="true" tns_w="0.02" tns_l="0.02" />
+    <xacro:tns name="3p7" parent="${part3}" x="${proximal_obeninnen}" y="0.012" z="0.085"  roll="0.8377"  pitch="0" yaw="1.57079" isvisible="true" tns_w="0.02" tns_l="0.02" />
+
+    <xacro:tns name="4p0" parent="${part2}" x="${proximal_aussen}"   y="-0.012" z="0.045" roll="1.57079" pitch="0" yaw="-1.57079" isvisible="true" tns_w="0.02" tns_l="0.045" />
+    <xacro:tns name="4p1" parent="${part2}" x="${proximal_aussen}"    y="0.012" z="0.045" roll="1.57079" pitch="0" yaw="-1.57079" isvisible="true" tns_w="0.02" tns_l="0.045" />
+    <xacro:tns name="4p2" parent="${part3}" x="${distal_aussen}"      y="0.00"  z="0.03"  roll="1.57079" pitch="0" yaw="-1.57079" isvisible="true" tns_w="0.045" tns_l="0.02" />
+    <xacro:tns name="4p3" parent="${part3}" x="${distal_aussen}"      y="0.00"  z="0.056" roll="1.57079" pitch="0" yaw="-1.57079" isvisible="true" tns_w="0.045" tns_l="0.02" />
+    <xacro:tns name="4p4" parent="${part3}" x="${proximal_obenaussen}" y="-0.011" z="0.084" roll="0.94" pitch="0" yaw="-1.57079" isvisible="true" tns_w="0.02" tns_l="0.023" />
+    <xacro:tns name="4p5" parent="${part3}" x="${proximal_obenaussen}" y="0.011" z="0.084"  roll="0.94" pitch="0" yaw="-1.57079" isvisible="true" tns_w="0.02" tns_l="0.023" />
+
+  </xacro:macro>
+
+</robot>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"
+       name="tns" >
+ <material name="tns_green">
+	<color rgba="0.0 0.4 0.0 1"/>
+ </material>
+  <material name="invisible">
+	<color rgba="0.0 0.0 0.0 0"/>
+  </material>
+ 
+<xacro:macro name="tns" params="name parent x y z roll pitch yaw isvisible tns_w tns_l">
+ <joint name="${name}" type="fixed">
+	<parent link="${parent}"/>
+	<child link="${name}"/>
+	<origin xyz="${x} ${y} ${z}" rpy="${roll} ${pitch} ${yaw}"/>
+ </joint>
+ <link name="${name}">
+     <inertial>
+		<mass value="0.001" />
+		<origin xyz="0 0 0" rpy="0.0 0.0 0.0" />
+		<inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0" />
+   	</inertial>
+   	<visual>
+       	<origin xyz="0 0 ${-tns_height/2}" rpy="0 0 0" />
+      		<geometry>
+      		<box size="${tns_w} ${tns_l} 0.001" /> 
+       	</geometry>
+        <material name="tns_green"/>
+    </visual>
+	<collision>
+       		<origin xyz="0 0 ${-tns_height/2}" rpy="0.0 0.0 0.0" />
+       		<geometry>
+       			<box size="${tns_w} ${tns_l} 0.001" />
+	        </geometry>
+	</collision>
+ </link>
+</xacro:macro>
+</robot>

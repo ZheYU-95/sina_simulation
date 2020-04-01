@@ -1,0 +1,21 @@
+<library path="lib/libgazebo_robot">
+
+  <!-- cartesian velocity goal,  using cartesian interpolation -->
+  <class name="gazebo_robot/VelocityControllerCartesianPose" type="gazebo_robot::VelocityControllerCartesianPose" base_class_type="controller_interface::ControllerBase">
+    <description>
+      This controller controls the robots joint velocities.
+    </description>
+  </class>
+
+  <class name="gazebo_robot/VelocityControllerCartesianVelocity" type="gazebo_robot::VelocityControllerCartesianVelocity" base_class_type="controller_interface::ControllerBase">
+    <description>
+      This controller controls the robots joint velocities.
+    </description>
+  </class>
+
+  <class name="gazebo_robot/PositionControllerCartesianVelocity" type="gazebo_robot::PositionControllerCartesianVelocity" base_class_type="controller_interface::ControllerBase">
+    <description>
+      This controller controls the robots joint positions.
+    </description>
+  </class>
+</library>

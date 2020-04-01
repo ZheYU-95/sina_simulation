@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: gazebo_robot
+    relative_path: urdf/simple_arm_6DoF.urdf
+    xacro_args: ""
+  SRDF:
+    relative_path: config/simple_arm.srdf
+  CONFIG:
+    author_name: Gergely Soti
+    author_email: gergely.soti@kit.edu
+    generated_timestamp: 1578568204

@@ -1,0 +1,51 @@
+## joint_names
+joint_names: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint]
+
+## control_mode_adapter
+max_command_silence: 0.5
+
+## joint_state_controller
+joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 200
+
+## velocity controller
+joint_group_velocity_controller:
+  type: velocity_controllers/JointGroupVelocityController
+  joints:
+     - arm_1_joint
+     - arm_2_joint
+     - arm_3_joint
+     - arm_4_joint
+     - arm_5_joint
+     - arm_6_joint
+  required_drive_mode: 2
+
+arm_1_joint_velocity_controller:
+  type: velocity_controllers/JointVelocityController
+  joint: arm_1_joint
+  required_drive_mode: 2
+arm_2_joint_velocity_controller:
+  type: velocity_controllers/JointVelocityController
+  joint: arm_2_joint
+  required_drive_mode: 2
+arm_3_joint_velocity_controller:
+  type: velocity_controllers/JointVelocityController
+  joint: arm_3_joint
+  required_drive_mode: 2
+arm_4_joint_velocity_controller:
+  type: velocity_controllers/JointVelocityController
+  joint: arm_4_joint
+  required_drive_mode: 2
+arm_5_joint_velocity_controller:
+  type: velocity_controllers/JointVelocityController
+  joint: arm_5_joint
+  required_drive_mode: 2
+arm_6_joint_velocity_controller:
+  type: velocity_controllers/JointVelocityController
+  joint: arm_6_joint
+  required_drive_mode: 2
+
+
+
+

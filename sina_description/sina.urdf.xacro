@@ -1,0 +1,74 @@
+<?xml version="1.0" ?>
+<robot name="sina" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+  <!-- INCLUDES -->
+  <!-- Neobotix MPO700 Platform -->
+  <xacro:include filename="$(find sina_description)/xacros/mpo_700_materials.xacro" />
+  <xacro:include filename="$(find sina_description)/xacros/mpo_700_body.xacro" />
+  <xacro:include filename="$(find sina_description)/xacros/mpo_700_gazebo.xacro" />
+
+  <!-- Sick Laserscanner --> 
+  <xacro:include filename="$(find sina_description)/xacros/sick_microscan_laser.xacro" />
+
+  <!-- Schunk Arm -->
+  <xacro:include filename="$(find sina_description)/xacros/lwa4p/lwa4p.urdf.xacro" />
+
+  <!-- Force-Torque-sensor -->
+  <xacro:include filename="$(find ati_force_torque)/description/urdf/ftm115.urdf.xacro" />
+
+    <!-- Sina gripper (with fixed joints) -->
+  <xacro:include filename="$(find sina_description)/xacros/gripper/fixed_sina_gripper.urdf.xacro" />
+
+  <link name="base_link"/>
+  <xacro:mpo_700_base name="platform_link"/>
+  <joint name="base_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="platform_link"/>
+  </joint>
+
+  <xacro:sick_microscan_laser_v0 name="sick_microscan_laser_front" parent="platform_link" ros_topic="sick_microscan_front/scan">
+  	<origin xyz="0.35 0.3 0.21" rpy="0 0 -0.785" />
+  </xacro:sick_microscan_laser_v0>
+  <xacro:sick_microscan_laser_v0 name="sick_microscan_laser_back" parent="platform_link" ros_topic="sick_microscan_back/scan">
+  	<origin xyz="-0.35 -0.3 0.21" rpy="0 0 2.356" />
+  </xacro:sick_microscan_laser_v0>
+
+  <xacro:schunk_lwa4p name="arm" parent="platform_link" has_podest="true">
+    <origin xyz="0.21 0 0.37" rpy="0 0 0" /> 
+  </xacro:schunk_lwa4p>
+
+  <xacro:ati_ftm115 name="fts" parent="arm_tool_link">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:ati_ftm115> 
+  <xacro:sina_gripper parent="fts_tool_link">
+    <origin xyz="0 0 0" rpy="0 0 ${-pi*0.5}" /> 
+  </xacro:sina_gripper>
+
+  <!-- link just in front of the gripper -->
+  <link name="gripper_tip_link"/>
+  <joint name="gripper_tip_joint" type="fixed">
+    <parent link="gripper_base_link"/>
+    <child link="gripper_tip_link"/>
+    <origin xyz="-0.025 0.0 0.19"/>
+  </joint>
+
+  <link name="mpo_box_center_front_link"/>
+  <link name="mpo_box_left_front_link"/>
+  <link name="mpo_box_right_front_link"/>
+  <joint name="mpo_box_center_front_joint" type="fixed">
+    <parent link="platform_link"/>
+    <child link="mpo_box_center_front_link"/>
+    <origin xyz="0.05 0 0.65"/>
+  </joint>
+  <joint name="mpo_box_left_front_joint" type="fixed">
+    <parent link="mpo_box_center_front_link"/>
+    <child link="mpo_box_left_front_link"/>
+    <origin xyz="0 0.3 0"/>
+  </joint>
+  <joint name="mpo_box_right_front_joint" type="fixed">
+    <parent link="mpo_box_center_front_link"/>
+    <child link="mpo_box_right_front_link"/>
+    <origin xyz="0 -0.3 0"/>
+  </joint>
+</robot>

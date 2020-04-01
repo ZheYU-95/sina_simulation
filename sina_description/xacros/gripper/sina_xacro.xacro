@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"
+       name="sina_xacro" >
+
+ 
+<xacro:macro name="thumb" params="position roll pitch yaw x y z parent low up scale mesh">
+    <link name="${position}_thumb">
+        <visual>
+            <origin rpy="${roll} ${pitch} ${yaw}" xyz="0 0 0"/>
+            <geometry>
+                <mesh scale="0.001 0.001 ${scale}" filename="package://sina_description/meshes/gripper/${mesh}"/>
+            </geometry>
+        </visual>
+         <collision>
+            <geometry>
+                <mesh scale="0.001 0.001 ${scale}" filename="package://sina_description/meshes/gripper/${mesh}"/>
+            </geometry>
+            <origin rpy="${roll}  ${pitch} ${yaw}" xyz="0 0 0"/>
+        </collision>
+        <inertial>
+            <mass value="0.001"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+        </inertial>
+    </link>
+    
+    <joint name="${position}_joint" type="revolute">
+        <axis xyz="0 1 0"/>
+        <limit effort="1000.0" lower="${low}" upper="${up}" velocity="0.5"/>
+        <parent link="${parent}"/>
+        <child link="${position}_thumb"/>
+        <origin rpy="0 0 0" xyz="${x} ${y} ${z}"/>
+    </joint>
+</xacro:macro>     
+
+<!-- thumb with a fixed joint -->
+<xacro:macro name="fixed_thumb" params="position roll pitch yaw x y z parent low up scale mesh">
+    <link name="${position}_thumb">
+        <visual>
+            <origin rpy="${roll} ${pitch} ${yaw}" xyz="0 0 0"/>
+            <geometry>
+                <mesh scale="0.001 0.001 ${scale}" filename="package://sina_description/meshes/gripper/${mesh}"/>
+            </geometry>
+        </visual>
+         <collision>
+            <geometry>
+                <mesh scale="0.001 0.001 ${scale}" filename="package://sina_description/meshes/gripper/${mesh}"/>
+            </geometry>
+            <origin rpy="${roll}  ${pitch} ${yaw}" xyz="0 0 0"/>
+        </collision>
+        <inertial>
+            <mass value="0.001"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+        </inertial>
+    </link>
+    
+    <joint name="${position}_joint" type="fixed">
+        <axis xyz="0 1 0"/>
+        <limit effort="1000.0" lower="${low}" upper="${up}" velocity="0.5"/>
+        <parent link="${parent}"/>
+        <child link="${position}_thumb"/>
+        <origin rpy="0 0 0" xyz="${x} ${y} ${z}"/>
+    </joint>
+</xacro:macro>     
+
+</robot>

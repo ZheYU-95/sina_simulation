@@ -1,0 +1,36 @@
+<launch>
+<!-- rostopic pub -1 /arm/cartesian_pose_velocity_controller/command_cartesian_pose geometry_msgs/Pose '{position: {x: 0.3, y: 0.0, z: 0.5}, orientation: {x: 0.0, y: 0.8, z: 0.0, w: 0.6}}' -->
+    <arg name="simulation" default="false" />
+    
+    <param name="robot_description" command="$(find xacro)/xacro '$(find sina_description)/xacros/lwa4p/robot.urdf.xacro'" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+        <param name="publish_frequency" type="double" value="200.0" />
+        <param name="tf_prefix" type="string" value="" />
+    </node>
+
+
+    <group if= "$(arg simulation)" >
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+	    <arg name="paused" value="false"/>
+        </include>
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model lwa4p"/>
+    </group>
+
+    <group unless="$(arg simulation)">
+        <node ns="arm" name="driver" pkg="canopen_motor_node" type="canopen_motor_node" output="screen" clear_params="true" launch-prefix="">
+            <rosparam command="load" file="$(find sina_description)/config/can.yaml" />
+            <rosparam command="load" file="$(find sina_description)/config/arm_driver.yaml" />
+            <param name="use_fts" value="false"/>
+        </node>
+    </group>
+
+    <rosparam ns="arm" file ="$(find gazebo_robot)/config/controller.yaml"/>
+    <rosparam ns="arm" file ="$(find sina_description)/config/arm_controller.yaml"/>
+
+    <node ns="arm" name="arm_controller_spawner" pkg="controller_manager" type="spawner" args="joint_state_controller" respawn="false" output="screen"/>
+    <node ns="arm" name= "cartesian_pose_velocity_controller_spawner" pkg= "controller_manager" type="spawner" args="cartesian_pose_velocity_controller"/>
+	<node ns="arm" name= "cartesian_velocity_velocity_controller_spawner" pkg= "controller_manager" type="spawner" args="cartesian_velocity_velocity_controller"/>
+	<node ns="arm" name= "cartesian_velocity_position_controller_spawner" pkg= "controller_manager" type="spawner" args="cartesian_velocity_position_controller"/>
+
+    <node ns="arm" name="joint_states_relay" pkg="topic_tools" type="relay" args="joint_states /joint_states" cwd="node" respawn="true" output="screen"/>
+</launch>

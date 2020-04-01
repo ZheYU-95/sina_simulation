@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro"
+       name="iirob_powerball" >
+  <!-- schunk lwa4p -->
+  <link name="world"/>
+  <xacro:include filename="$(find sina_description)/xacros/lwa4p/lwa4p.urdf.xacro" />
+
+  <xacro:schunk_lwa4p name="arm" parent="world" has_podest="true">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:schunk_lwa4p>
+
+</robot>

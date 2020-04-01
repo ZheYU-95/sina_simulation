@@ -1,0 +1,68 @@
+cartesian_pose_velocity_controller:
+  type: "gazebo_robot/VelocityControllerCartesianPose"
+  joints:
+    - arm_1_joint
+    - arm_2_joint
+    - arm_3_joint
+    - arm_4_joint
+    - arm_5_joint
+    - arm_6_joint
+  required_drive_mode: 2
+  root_link: "arm_base_link"
+  tip_link: "arm_tool_link"
+  dimensions: 6
+  period: 0.004
+  max_velocities: [1.745, 1.745, 1.745, 1.745, 1.745, 1.745]
+  max_acceleration: [1.745, 1.745, 1.745, 1.745, 1.745, 1.745]
+  max_jerk: [100, 100, 100, 100, 100, 100]
+  sync_behavior: 0
+  final_behavior: 0
+  first_dynamic_segment_id: 2
+  second_dynamic_segment_id: 4
+  max_joint_velocities: [1.745, 1.745, 1.745, 1.745, 1.745, 1.745]
+
+cartesian_velocity_velocity_controller:
+  type: "gazebo_robot/VelocityControllerCartesianVelocity"
+  joints:
+    - arm_1_joint
+    - arm_2_joint
+    - arm_3_joint
+    - arm_4_joint
+    - arm_5_joint
+    - arm_6_joint
+  required_drive_mode: 2
+  root_link: "arm_base_link"
+  tip_link: "arm_tool_link"
+  dimensions: 6
+  period: 0.004
+  max_velocities: [1.745, 1.745, 1.745, 1.745, 1.745, 1.745]
+  max_acceleration: [1.745, 1.745, 1.745, 1.745, 1.745, 1.745]
+  max_jerk: [100, 100, 100, 100, 100, 100]
+  sync_behavior: 0
+  final_behavior: 0
+  first_dynamic_segment_id: 2
+  second_dynamic_segment_id: 4
+  max_joint_velocities: [1.745, 1.745, 1.745, 1.745, 1.745, 1.745]
+
+cartesian_velocity_position_controller:
+  type: "gazebo_robot/PositionControllerCartesianVelocity"
+  joints:
+    - arm_1_joint
+    - arm_2_joint
+    - arm_3_joint
+    - arm_4_joint
+    - arm_5_joint
+    - arm_6_joint
+  required_drive_mode: 2
+  root_link: "arm_base_link"
+  tip_link: "arm_tool_link"
+  dimensions: 6
+  period: 0.004
+  max_velocities: [1.745, 1.745, 1.745, 1.745, 1.745, 1.745]
+  max_acceleration: [1.745, 1.745, 1.745, 1.745, 1.745, 1.745]
+  max_jerk: [100, 100, 100, 100, 100, 100]
+  sync_behavior: 0
+  final_behavior: 0
+  first_dynamic_segment_id: 2
+  second_dynamic_segment_id: 4
+  max_joint_velocities: [1.745, 1.745, 1.745, 1.745, 1.745, 1.745]

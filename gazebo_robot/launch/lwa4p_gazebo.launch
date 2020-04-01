@@ -1,0 +1,12 @@
+<launch>
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="paused" value="false"/>
+    </include>
+    <param name="robot_description" command="$(find xacro)/xacro '$(find sina_description)/xacros/lwa4p/robot.urdf.xacro'" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model lwa4p"    />
+    <rosparam ns="arm" file ="$(find gazebo_robot)/config/controller.yaml"/>
+    <node ns="arm" name= "cartesian_pose_velocity_controller_spawner" pkg= "controller_manager" type="spawner" args="--stopped cartesian_pose_velocity_controller"/>
+    <node ns="arm" name= "cartesian_velocity_velocity_controller_spawner" pkg= "controller_manager" type="spawner" args="--stopped cartesian_velocity_velocity_controller"/>
+    <node ns="arm" name= "cartesian_velocity_position_controller_spawner" pkg= "controller_manager" type="spawner" args="cartesian_velocity_position_controller"/>
+</launch>
